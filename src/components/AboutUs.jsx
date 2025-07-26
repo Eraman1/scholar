@@ -1,7 +1,5 @@
 
 
-
-
 import { TargetIcon, GraduationCapIcon, LightbulbIcon, Users2, GraduationCap } from 'lucide-react'
 
 export const AboutUs = () => {
@@ -10,7 +8,7 @@ export const AboutUs = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl font-bold text-[#3B3B3B] mb-2">About Vedubuild</h2>
-                    <div class="w-32 h-1 bg-lime-500 mx-auto rounded-full"></div>
+                    <div className="w-32 h-1 bg-lime-500 mx-auto rounded-full"></div>
                     <p className="text-xl text-[#3B3B3B] max-w-3xl mx-auto mt-4">
                         Empowering youth, uplifting communities, and building a skilled India through certified vocational education and entrepreneurship.
                     </p>

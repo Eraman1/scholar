@@ -37,7 +37,7 @@ export const Contact = () => {
                 {/* Heading */}
                 <div className="text-center mb-16">
                     <h2 className="text-4xl font-bold text-gray-900 mb-2">Let’s Connect</h2>
-                    <div class="w-32 h-1 bg-lime-500 mx-auto rounded-full"></div>
+                    <div className="w-32 h-1 bg-lime-500 mx-auto rounded-full"></div>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto mt-4">
                         Whether you’re a student, parent, or partner organization — we're here to support and guide you.
                     </p>

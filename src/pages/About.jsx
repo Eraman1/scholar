@@ -7,7 +7,7 @@ export const About = () => {
                 <h2 className="text-3xl sm:text-4xl font-bold text-[#3B3B3B] mb-4 text-center">
                     Who We Are
                 </h2>
-                <div class="w-32 h-1 bg-amber-500 mx-auto rounded-full mb-6"></div>
+                <div className="w-32 h-1 bg-amber-500 mx-auto rounded-full mb-6"></div>
 
                 <p className="text-lg text-[#3B3B3B] leading-relaxed text-justify">
                     <strong className="text-[#FF6B00]">Vedubuild Trust</strong> was established in the year 2016 and is registered under the

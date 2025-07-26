@@ -1,8 +1,9 @@
 import { X, Menu } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link,useNavigate, useLocation } from 'react-router-dom'
 
 export default function Navbar() {
+    const navigate = useNavigate()
     const [isLoginOpen, setIsLoginOpen] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -26,7 +27,7 @@ export default function Navbar() {
                     <div className="flex justify-between items-center h-20">
                         <div className="flex items-center space-x-2">
                             <img
-                                src="/img/vedubuildLogo.png"
+                                src="/img/partners/VRSDCLOGO.png"
                                 alt="Vedubuild Logo"
                                 className="h-12 w-auto object-contain"
                             />
@@ -46,7 +47,12 @@ export default function Navbar() {
                                     {item.label.toUpperCase()}
                                 </Link>
                             ))}
-
+                            <button
+                                onClick={() => navigate('/apply')}
+                                className="bg-gray-100 hover:bg-[#FF6B00] text-gray-800 hover:text-white border border-[#FF6B00] px-4 py-2 rounded-md text-base font-semibold transition-colors"
+                            >
+                                Apply Now
+                            </button>
                             <button
                                 onClick={() => setIsLoginOpen(true)}
                                 className="bg-[#FF6B00] hover:bg-[#e55c00] text-white px-4 py-2 rounded-md text-base font-semibold transition-colors"
@@ -83,6 +89,14 @@ export default function Navbar() {
                                 {item.label}
                             </Link>
                         ))}
+                        <button
+                            onClick={() => {
+                                navigate('/apply')
+                            }}
+                            className="mt-4 w-full bg-gray-100 hover:bg-[#FF6B00] text-gray-800 hover:text-white border border-[#FF6B00] px-4 py-2 rounded-md text-base font-semibold transition-colors"
+                        >
+                            Apply Now
+                        </button>
                         <button
                             onClick={() => {
                                 setIsLoginOpen(true)
