@@ -552,7 +552,7 @@ export default function ScholarshipApplicationForm() {
                     )}
 
                     {/* Navigation Buttons */}
-                    <div className="flex justify-between pt-8 border-t">
+                    <div className="flex justify-between pt-8 ">
                         <button
                             onClick={prevStep}
                             disabled={currentStep === 1}
