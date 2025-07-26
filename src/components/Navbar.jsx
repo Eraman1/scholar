@@ -1,6 +1,6 @@
 import { X, Menu } from 'lucide-react'
 import { useState } from 'react'
-import { Link,useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 export default function Navbar() {
     const navigate = useNavigate()
@@ -89,14 +89,13 @@ export default function Navbar() {
                                 {item.label}
                             </Link>
                         ))}
-                        <button
-                            onClick={() => {
-                                navigate('/apply')
-                            }}
+                        <Link
+                            to="/apply"
+
                             className="mt-4 w-full bg-gray-100 hover:bg-[#FF6B00] text-gray-800 hover:text-white border border-[#FF6B00] px-4 py-2 rounded-md text-base font-semibold transition-colors"
                         >
                             Apply Now
-                        </button>
+                        </Link>
                         <button
                             onClick={() => {
                                 setIsLoginOpen(true)
