@@ -33,7 +33,7 @@ export const Scholarship = () => {
                                     <span className="text-xl font-bold text-[#51A545]">{scholarship.enrollmentFee}</span>
                                 </div>
                                 <h3 className="text-xl font-semibold text-[#3B3B3B] mb-2">{scholarship.title}</h3>
-                                <p className="text-[#3B3B3B] mb-4">{scholarship.description}</p>
+                                <p className="text-[#3B3B3B] mb-4">{scholarship.shortDescription}</p>
 
                                 <div className="space-y-4">
                                     <div>

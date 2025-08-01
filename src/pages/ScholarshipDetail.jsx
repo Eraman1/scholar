@@ -1,14 +1,16 @@
 import React from 'react'
 import {
     Calendar, Clock, Users, Award, BookOpen, Target, CheckCircle,
-    MapPin, IndianRupee, Gift
+    MapPin, IndianRupee, Gift,
+    AwardIcon
 } from 'lucide-react'
 
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { scholarships } from '../data/scholarships' // ✅ Make sure path is correct
 
 export default function DetailedScholarshipPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
     const currentProgram = scholarships.find(sch => sch.id === id)
     const activeTab = id // 'vees' or 'v-star'
 
@@ -42,14 +44,32 @@ export default function DetailedScholarshipPage() {
                     <div className="lg:col-span-2 space-y-6">
                         {/* Overview */}
                         <div className="bg-white rounded-xl shadow-lg p-8">
+                            <div className="flex items-center justify-start mb-4">
+                                <img
+                                    src={currentProgram.logo}
+                                    alt={currentProgram.title}
+                                    className="w-32 h-auto object-contain"
+                                />
+                            </div>
+
                             <div className="flex items-center mb-4">
-                                <Award className="h-8 w-8 text-[#FF6B00] mr-3" />
+                                {/* <Award className="h-8 w-8 text-[#FF6B00] mr-3" /> */}
+
                                 <h2 className="text-2xl font-bold text-[#3B3B3B]">{currentProgram.title}</h2>
                             </div>
                             <p className="text-lg text-gray-600 mb-6">{currentProgram.subtitle}</p>
                             <div className="bg-gradient-to-r from-orange-100 to-green-100 rounded-lg p-6">
+                                <b>Objective:</b>
                                 <p className="text-[#3B3B3B] leading-relaxed">{currentProgram.objective}</p>
                             </div>
+                            <div className="bg-gradient-to-r mt-4 from-orange-100 to-green-100 rounded-lg p-6 space-y-4">
+                                {currentProgram.description.map((para, index) => (
+                                    <p key={index} className="text-[#3B3B3B] leading-relaxed">
+                                        {para}
+                                    </p>
+                                ))}
+                            </div>
+
                         </div>
 
                         {/* Exam Pattern */}
@@ -89,13 +109,40 @@ export default function DetailedScholarshipPage() {
                             <div className="flex items-center mb-6">
                                 <Gift className="h-6 w-6 text-[#FF6B00] mr-3" />
                                 <h3 className="text-xl font-bold text-[#3B3B3B]">
-                                    {activeTab === 'v-star' ? 'Awards & Benefits' : 'Student Benefits'}
+                                    Student Benefits (Mentored and Nurtured)
                                 </h3>
                             </div>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                {currentProgram.benefits.map((benefit, index) => (
+                                    <div key={index} className="flex items-start">
+                                        <CheckCircle className="h-5 w-5 text-[#51A545] mr-3 mt-0.5 flex-shrink-0" />
+                                        <span className="text-[#3B3B3B]">{benefit}</span>
+                                    </div>
+                                ))}
+                            </div>
 
+                            <div className="flex items-center mb-6 mt-8">
+                                <Gift className="h-6 w-6 text-[#FF6B00] mr-3" />
+                                <h3 className="text-xl font-bold text-[#3B3B3B]">
+                                    Addtional Benefits
+                                </h3>
+                            </div>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                {currentProgram.additionBenifits.map((benefit, index) => (
+                                    <div key={index} className="flex items-start">
+                                        <CheckCircle className="h-5 w-5 text-[#51A545] mr-3 mt-0.5 flex-shrink-0" />
+                                        <span className="text-[#3B3B3B]">{benefit}</span>
+                                    </div>
+                                ))}
+                            </div>
                             {currentProgram.awards && (
-                                <div className="mb-8">
-                                    <h4 className="text-lg font-semibold text-[#3B3B3B] mb-4">Scholarship Awards</h4>
+                                <div className="mb-8 mt-8">
+                                    <div className="flex items-center mb-6">
+                                        <AwardIcon className="h-6 w-6 text-[#FF6B00] mr-3" />
+                                        <h3 className="text-xl font-bold text-[#3B3B3B]">
+                                            Scholarship Awards
+                                        </h3>
+                                    </div>
                                     <div className="grid md:grid-cols-3 gap-4 mb-6">
                                         <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-lg">
                                             <h5 className="font-bold text-[#3B3B3B] mb-2">State Level</h5>
@@ -118,15 +165,31 @@ export default function DetailedScholarshipPage() {
                                     </div>
                                 </div>
                             )}
+                            {activeTab === 'vees' ? (<div className="flex items-center justify-start mb-4">
+                                <img
+                                    src="/img/rewardgraph.jpg"
+                                    alt="Reward Graph"
+                                   
+                                    className="w-auto h-auto object-contain mt-4"
+                                />
+                            </div>) : null}
 
-                            <div className="grid md:grid-cols-2 gap-4">
-                                {currentProgram.benefits.map((benefit, index) => (
-                                    <div key={index} className="flex items-start">
-                                        <CheckCircle className="h-5 w-5 text-[#51A545] mr-3 mt-0.5 flex-shrink-0" />
-                                        <span className="text-[#3B3B3B]">{benefit}</span>
-                                    </div>
+                        </div>
+                        <div className="bg-white rounded-xl shadow-lg p-8">
+
+
+
+
+
+                            <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-6 space-y-4">
+                                <b>Term and Conditions:</b> <br /><br />
+                                {currentProgram.termAndConditions.map((para, index) => (
+                                    <p key={index} className="text-[#3B3B3B] text-sm leading-relaxed">
+                                        {para}
+                                    </p>
                                 ))}
                             </div>
+
                         </div>
                     </div>
 
@@ -166,7 +229,7 @@ export default function DetailedScholarshipPage() {
                             </div>
                             <p className="text-3xl font-bold mb-2">{currentProgram.enrollmentFee}</p>
                             <p className="text-sm opacity-90 mb-4">One-time registration fee</p>
-                            <button className="w-full bg-white text-[#FF6B00] font-bold py-3 px-4 rounded-lg hover:bg-gray-100 transition">
+                            <button onClick={() => navigate('/apply')} className="w-full bg-white text-[#FF6B00] font-bold py-3 px-4 rounded-lg hover:bg-gray-100 transition">
                                 Enroll Now
                             </button>
                         </div>

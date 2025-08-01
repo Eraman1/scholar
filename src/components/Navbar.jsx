@@ -89,13 +89,16 @@ export default function Navbar() {
                                 {item.label}
                             </Link>
                         ))}
-                        <Link
-                            to="/apply"
+                        <button
+                            onClick={() => {
+                                navigate('/apply')
+                                setMobileOpen(false)
+                            }}
 
                             className="mt-4 w-full bg-gray-100 hover:bg-[#FF6B00] text-gray-800 hover:text-white border border-[#FF6B00] px-4 py-2 rounded-md text-base font-semibold transition-colors"
                         >
                             Apply Now
-                        </Link>
+                        </button>
                         <button
                             onClick={() => {
                                 setIsLoginOpen(true)
