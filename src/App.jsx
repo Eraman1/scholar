@@ -12,11 +12,14 @@ import PartnerPage from './pages/PartnerPage'
 import Dashboard from './pages/Dashboard'
 import ScrollToTop from './components/ScrollToTop'
 import LoginPage from './pages/LoginPage'
+import PrivateRoute from './components/PrivateRoute'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="pt-10"> {/* To offset fixed navbar height */}
         <Navbar />
 
@@ -29,8 +32,13 @@ function App() {
           <Route path='/apply' element={<ScholarshipApplicationForm />} />
           <Route path='/partners' element={<div className='flex justify-center items-center h-screen'><h1 className="text-8xl font-bold text-[#3B3B3B] mt-2">Coming Soon</h1></div>} />
           <Route path='/events' element={<div className='flex justify-center items-center h-screen'><h1 className="text-8xl font-bold text-[#3B3B3B] mt-2">Coming Soon</h1></div>} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<LoginPage />}/>
+          {/* private route */}
+          <Route path="/dashboard" element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          } />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

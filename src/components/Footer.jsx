@@ -66,7 +66,7 @@ export const Footer = () => {
 
                 {/* Bottom Bar */}
                 <div className="border-t border-gray-200 mt-10 pt-6 text-center text-gray-200 text-sm">
-                    <p>&copy; 2024 Vedubuild. All rights reserved. Designed by <a href="https://www.aadishrisoftech.com" className="text-white font-semibold hover:text-amber-600 transition">Aadishri Softech</a>.</p>
+                    <p>&copy; 2024 Vedubuild. All rights reserved. Designed by <a href="https://www.aadishrisoftech.com" className="text-white font-semibold hover:text-amber-600 transition">Aadishri Softech Pvt Ltd</a>.</p>
                 </div>
             </div>
         </footer>

@@ -1,21 +1,52 @@
 import { useState } from 'react'
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../api/authApi';
+
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [remember, setRemember] = useState(false)
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // Future: Send to API
-        console.log({ email, password, remember })
-    }
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        try {
+            const res = await loginUser({ email, password });
+
+            if (res.data.success) {
+                toast.success("Login successful");
+                localStorage.setItem("isLoggedIn", "true");
+                navigate("/dashboard");
+            } else {
+                throw new Error(res.data.message || "Login failed");
+            }
+
+        } catch (err) {
+            setError(err.response?.data?.message || err.message || "Login error");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
             <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Login to Your Account</h2>
                 <form onSubmit={handleSubmit} className="space-y-5">
+                    {error && (
+                        <p className="text-red-500 text-sm text-center">{error}</p>
+                    )}
+
                     <div>
                         <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
                         <input
@@ -57,9 +88,10 @@ export default function LoginPage() {
 
                     <button
                         type="submit"
+                        disabled={loading}
                         className="w-full bg-[#FF6B00] hover:bg-[#e55c00] text-white py-2 rounded-md font-semibold transition-colors"
                     >
-                        Sign In
+                        {loading ? "Signing in..." : "Sign In"}
                     </button>
 
                     <p className="text-center text-sm text-gray-600">

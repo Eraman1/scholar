@@ -1,64 +1,162 @@
-import { Sidebar, SidebarItem, SidebarItemGroup } from "flowbite-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
-    ChartPie,
+    PieChart,
     User,
     LogOut,
     Image,
     MessageSquare,
     GraduationCap,
     Layout,
+    ChevronDown,
+    ChevronRight,
+    BookOpen,
+    Calendar,
+    Award,
+    CreditCard,
+    FileText,
+    ClipboardList
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
+import { logoutUser } from "../../api/authApi";
 
 const SidebarIcon = ({ icon: Icon }) => <Icon size={20} />;
 
 export default function ScholarshipSidebar() {
+    const [isExamManagementOpen, setIsExamManagementOpen] = useState(false);
+
+    // Mock location for demo - replace with actual useLocation in your app
+    const navigate = useNavigate();
+
     const isActiveTab = (tab) => {
         return location.search.includes(`tab=${tab}`);
     };
+
+    const toggleExamManagement = () => {
+        setIsExamManagementOpen(!isExamManagementOpen);
+    };
+    const handleLogout = async () => {
+
+
+        try {
+            const res = await logoutUser();
+
+            if (res.status === 200) {
+                localStorage.removeItem("isLoggedIn");
+                toast.success("Logged out successfully");
+                navigate("/login");
+            } else {
+                toast.error("Logout failed");
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
+            toast.error("Something went wrong during logout");
+        }
+    };
+
+
     return (
-        <Sidebar className="w-full h-screen md:w-50 lg:w-60 bg-white border-r border-gray-200 overflow-y-auto">
-            <SidebarItemGroup className="flex flex-col gap-2 p-2">
+        <div className="w-full h-screen mt-6 md:w-50 lg:w-60 bg-white border-r border-gray-200 overflow-y-auto">
+            <div className="flex flex-col gap-2 p-2">
 
-                <Link to="#">
-                    <SidebarItem icon={() => <SidebarIcon icon={ChartPie} />}>
+                <a href="#" className="block">
+                    <div className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer">
+                        <SidebarIcon icon={PieChart} />
                         <span className="ml-3 text-sm font-medium">Dashboard</span>
-                    </SidebarItem>
-                </Link>
+                    </div>
+                </a>
 
-                <Link to="/dashboard?tab=banner">
-                    <SidebarItem icon={() => <SidebarIcon icon={Image} />}
-                        className={`cursor-pointer ${isActiveTab("banner") ? "bg-green-200" : ""}`}>
+                <a href="/dashboard?tab=banner" className="block">
+                    <div className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("banner") ? "bg-green-200" : ""}`}>
+                        <SidebarIcon icon={Image} />
                         <span className="ml-3 text-sm font-medium">Banner</span>
-                    </SidebarItem>
-                </Link>
+                    </div>
+                </a>
 
-                <Link to="/dashboard?tab=enquiries">
-                    <SidebarItem icon={() => <SidebarIcon icon={MessageSquare} />}
-                        active={isActiveTab("enquiries")}
-                        className={`cursor-pointer ${isActiveTab("enquiries") ? "bg-green-200" : ""}`}>
+                <a href="/dashboard?tab=enquiries" className="block">
+                    <div className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("enquiries") ? "bg-green-200" : ""}`}>
+                        <SidebarIcon icon={MessageSquare} />
                         <span className="ml-3 text-sm font-medium">Enquiries</span>
-                    </SidebarItem>
-                </Link>
+                    </div>
+                </a>
 
-                <Link to="/dashboard?tab=students">
-                    <SidebarItem icon={() => <SidebarIcon icon={GraduationCap} />}
-                        active={isActiveTab("students")}
-                        className={`cursor-pointer ${isActiveTab("students") ? "bg-green-200" : ""}`}
-                    >
+                <a href="/dashboard?tab=students" className="block">
+                    <div className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("students") ? "bg-green-200" : ""}`}>
+                        <SidebarIcon icon={GraduationCap} />
                         <span className="ml-3 text-sm font-medium">Students</span>
-                    </SidebarItem>
-                </Link>
+                    </div>
+                </a>
 
+                {/* Exam Management Section */}
+                <div className="mt-4">
+                    <div
+                        onClick={toggleExamManagement}
+                        className="flex items-center justify-between p-2 text-gray-700 rounded-lg hover:bg-gray-100 cursor-pointer group"
+                    >
+                        <div className="flex items-center">
+                            <SidebarIcon icon={ClipboardList} />
+                            <span className="ml-3 text-sm font-medium">Exam Management</span>
+                        </div>
+                        {isExamManagementOpen ? (
+                            <ChevronDown size={16} className="text-gray-500" />
+                        ) : (
+                            <ChevronRight size={16} className="text-gray-500" />
+                        )}
+                    </div>
 
+                    {/* Collapsible Exam Management Items */}
+                    {isExamManagementOpen && (
+                        <div className="ml-4 mt-2 space-y-1">
+                            <a href="/dashboard?tab=syllabus" className="block">
+                                <div className={`flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("syllabus") ? "bg-green-200" : ""}`}>
+                                    <SidebarIcon icon={BookOpen} />
+                                    <span className="ml-3 text-sm font-medium">Syllabus</span>
+                                </div>
+                            </a>
+
+                            <a href="/dashboard?tab=exam-schedule" className="block">
+                                <div className={`flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("exam-schedule") ? "bg-green-200" : ""}`}>
+                                    <SidebarIcon icon={Calendar} />
+                                    <span className="ml-3 text-sm font-medium">Exam Schedule</span>
+                                </div>
+                            </a>
+
+                            <a href="/dashboard?tab=certificate" className="block">
+                                <div className={`flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("certificate") ? "bg-green-200" : ""}`}>
+                                    <SidebarIcon icon={Award} />
+                                    <span className="ml-3 text-sm font-medium">Certificate</span>
+                                </div>
+                            </a>
+
+                            <a href="/dashboard?tab=admit-card" className="block">
+                                <div className={`flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("admit-card") ? "bg-green-200" : ""}`}>
+                                    <SidebarIcon icon={CreditCard} />
+                                    <span className="ml-3 text-sm font-medium">Admit Card</span>
+                                </div>
+                            </a>
+
+                            <a href="/dashboard?tab=result" className="block">
+                                <div className={`flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("result") ? "bg-green-200" : ""}`}>
+                                    <SidebarIcon icon={FileText} />
+                                    <span className="ml-3 text-sm font-medium">Result</span>
+                                </div>
+                            </a>
+                        </div>
+                    )}
+                </div>
 
                 <hr className="my-4 border-gray-200" />
 
-                <SidebarItem icon={() => <SidebarIcon icon={LogOut} />}>
+                <div
+                    onClick={handleLogout}
+                    className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer"
+                >
+                    <SidebarIcon icon={LogOut} />
                     <span className="ml-3 text-sm font-medium">Sign Out</span>
-                </SidebarItem>
+                </div>
 
-            </SidebarItemGroup>
-        </Sidebar>
+
+            </div>
+        </div>
     );
 }

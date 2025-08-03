@@ -10,7 +10,7 @@ export const Partner = () => {
         { name: "Hirease", logo: "/img/partners/hireaselogo.jpg" },
         { name: "kidzcloud", logo: "/img/partners/kidzcloud.png" },
         { name: "Skill Root", logo: "/img/partners/skillrootlogopng.png" },
-        { name: "VRSDC", logo: "/img/partners/VRSDCLOGO.png" },
+        { name: "Vedubuild Trust", logo: "/img/vedubuildLogo.png" },
         { name: "We4Task", logo: "/img/partners/we4tasklogo.png" },
     ]
 

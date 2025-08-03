@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { MailCheck, MapPinCheck, PhoneIncoming } from 'lucide-react'
+import toast from 'react-hot-toast'
+import { createEnquiry } from '../api/enquiryApi'
 
 export const Contact = () => {
     const [formData, setFormData] = useState({
         fullName: '',
         phone: '',
         email: '',
-        subject: '',
         message: ''
     })
 
@@ -16,19 +17,32 @@ export const Contact = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        setTimeout(() => {
-            console.log('Submitted:', formData)
-            setSuccess(true)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formData.fullName || !formData.email || !formData.message) {
+            toast.error("Please fill in all the required fields");
+            return;
+        }
+
+        try {
+            await createEnquiry(formData);
+
+            toast.success("Enquiry submitted successfully!");
+            setSuccess(true);
             setFormData({
                 fullName: '',
                 phone: '',
                 email: '',
                 message: ''
-            })
-        }, 800)
-    }
+            });
+        } catch (error) {
+            console.error("Enquiry error:", error);
+            toast.error(error.response?.data?.message || "Failed to submit enquiry");
+        }
+    };
+
+
 
     return (
         <section id="contact" className="py-20 bg-gradient-to-br from-white to-blue-50">

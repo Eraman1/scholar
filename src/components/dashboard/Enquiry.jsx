@@ -1,28 +1,91 @@
-import { Download, Upload } from "lucide-react";
-import { useState } from "react";
+import { Download } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { getAllEnquiry } from "../../api/enquiryApi";
 
 export default function EnquiryTable() {
-
+    const [enquiries, setEnquiries] = useState([]);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [enquiryIdToDelete, setEnquiryIdToDelete] = useState(null);
-
-    const sampleEnquiries = [
-        {
-            _id: "1",
-            fullName: "Aman Kumar",
-            phone: "9876543210",
-            email: "aman@example.com",
-            message: "Hello, this is testing message",
-            dateAndTime: "2023-08-01T10:00:00.000Z",
-        },
-    ];
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filters, setFilters] = useState({
+        fromDate: "",
+        toDate: "",
+    });
 
 
+    useEffect(() => {
+        const fetchEnquiries = async () => {
+            try {
+                const res = await getAllEnquiry();
+                setEnquiries(res.data.enquiries); // adjust key as per your backend
+            } catch (err) {
+                console.error(err);
+                toast.error("Failed to fetch enquiries");
+            }
+        };
+        fetchEnquiries();
+    }, []);
 
-    const handleDeleteClick = (id, e) => {
-        e.stopPropagation(); // prevent triggering row click
-        setEnquiryIdToDelete(id);
-        setShowDeleteModal(true);
+    // ✅ Format Date for Display
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleString("en-IN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        });
+    };
+
+    // ✅ Filtering Logic
+    const filteredEnquiries = useMemo(() => {
+        return enquiries.filter((enquiry) => {
+            const enquiryDate = new Date(enquiry.date);
+            const enquiryDateOnly = new Date(
+                enquiryDate.getFullYear(),
+                enquiryDate.getMonth(),
+                enquiryDate.getDate()
+            );
+
+            const matchesSearch =
+                searchTerm === "" ||
+                enquiry.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                enquiry.phone?.toString().includes(searchTerm) ||
+                enquiry.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                enquiry.message?.toLowerCase().includes(searchTerm.toLowerCase());
+
+            let matchesDateRange = true;
+
+            if (filters.fromDate) {
+                const fromDate = new Date(filters.fromDate);
+                matchesDateRange = matchesDateRange && enquiryDateOnly >= fromDate;
+            }
+
+            if (filters.toDate) {
+                const toDate = new Date(filters.toDate);
+                matchesDateRange = matchesDateRange && enquiryDateOnly <= toDate;
+            }
+
+            return matchesSearch && matchesDateRange;
+        });
+    }, [enquiries, searchTerm, filters]);
+
+    const handleFilterChange = (filterType, value) => {
+        setFilters((prev) => ({
+            ...prev,
+            [filterType]: value,
+        }));
+    };
+
+    const clearAllFilters = () => {
+        setFilters({
+            fromDate: "",
+            toDate: "",
+        });
+        setSearchTerm("");
     };
 
     const confirmDelete = () => {
@@ -30,52 +93,142 @@ export default function EnquiryTable() {
         setShowDeleteModal(false);
     };
 
+    const handleDeleteClick = (id, e) => {
+        e.stopPropagation();
+        setEnquiryIdToDelete(id);
+        setShowDeleteModal(true);
+    };
+
     return (
-        <div className="p-4 w-full overflow-x-auto">
+        <div className="p-4 w-full">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Enquiries </h2>
-            </div>
-            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Enquiries ({filteredEnquiries.length})</h2>
                 <div className="flex gap-2">
-                    <input type="text" placeholder="Search" className="border border-gray-300 w-[300px] rounded-md py-2 px-4" />
+                    <button className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                        <Download className="w-4 h-4" />
+                        Export
+                    </button>
                 </div>
             </div>
 
-            <table className="min-w-full table-auto text-left border-collapse">
-                <thead className="bg-orange-200">
-                    <tr>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Name</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Mobile</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Email</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Message</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Date&time</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600 text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody className="divide-y">
-                    {sampleEnquiries.map((message) => (
-                        <tr
-                            key={message._id}
-                            className="bg-white cursor-pointer hover:bg-gray-100"
-                        >
-                            <td className="px-4 py-2 text-sm">{message.fullName}</td>
-                            <td className="px-4 py-2 text-sm">{message.phone}</td>
-                            <td className="px-4 py-2 text-sm">{message.email}</td>
-                            <td className="px-4 py-2 text-sm">{message.message}</td>
-                            <td className="px-4 py-2 text-sm">{message.dateAndTime}</td>
-                            <td className="px-4 py-2 text-sm text-red-500 text-center">
-                                <button
-                                    onClick={(e) => handleDeleteClick(message._id, e)}
-                                    className="hover:underline"
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            {/* Search and Filters */}
+            <div className="mb-4 space-y-4">
+                <div className="flex justify-between items-center">
+                    <input
+                        type="text"
+                        placeholder="Search by name, phone, email, or message..."
+                        className="border border-gray-300 w-[400px] rounded-md py-2 px-4"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button
+                        onClick={clearAllFilters}
+                        className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
+                    >
+                        Clear Filters
+                    </button>
+                </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* From Date */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                        <input
+                            type="date"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            value={filters.fromDate}
+                            onChange={(e) => handleFilterChange('fromDate', e.target.value)}
+                        />
+                    </div>
+
+                    {/* To Date */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                        <input
+                            type="date"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            value={filters.toDate}
+                            onChange={(e) => handleFilterChange('toDate', e.target.value)}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Table with horizontal scroll */}
+            <div className="overflow-x-auto border border-gray-200 rounded-lg">
+                <table className="min-w-full table-auto text-left border-collapse">
+                    <thead className="bg-orange-200">
+                        <tr>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Name</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Mobile</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Email</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap min-w-[300px]">Message</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Date & Time</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                        {filteredEnquiries.map((message) => (
+                            <tr
+                                key={message._id}
+                                className="bg-white cursor-pointer hover:bg-gray-50 transition-colors"
+                            >
+                                <td className="px-4 py-3 text-sm whitespace-nowrap font-medium">{message.fullName}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{message.phone}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap text-blue-600">{message.email}</td>
+                                <td className="px-4 py-3 text-sm max-w-[300px]">
+                                    <div className="truncate" title={message.message}>
+                                        {message.message}
+                                    </div>
+                                </td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">
+                                    <div className="text-gray-900">{formatDate(message.date)}</div>
+                                </td>
+                                <td className="px-4 py-3 text-sm text-center whitespace-nowrap">
+                                    {/* <button
+                                        onClick={(e) => handleDeleteClick(message._id, e)}
+                                        className="text-red-500 hover:text-red-700 hover:underline font-medium"
+                                    >
+                                        Delete
+                                    </button> */}
+                                </td>
+                            </tr>
+                        ))}
+                        {filteredEnquiries.length === 0 && (
+                            <tr>
+                                <td colSpan="6" className="px-4 py-8 text-center text-gray-500">
+                                    No enquiries found matching your criteria.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Summary Statistics */}
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-blue-50 p-4 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-600">{filteredEnquiries.length}</div>
+                    <div className="text-sm text-gray-600">Total Enquiries</div>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">
+                        {filteredEnquiries.filter(e => new Date(e.dateAndTime).toDateString() === new Date().toDateString()).length}
+                    </div>
+                    <div className="text-sm text-gray-600">Today's Enquiries</div>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg">
+                    <div className="text-2xl font-bold text-purple-600">
+                        {filteredEnquiries.filter(e => {
+                            const enquiryDate = new Date(e.dateAndTime);
+                            const weekAgo = new Date();
+                            weekAgo.setDate(weekAgo.getDate() - 7);
+                            return enquiryDate >= weekAgo;
+                        }).length}
+                    </div>
+                    <div className="text-sm text-gray-600">This Week</div>
+                </div>
+            </div>
 
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (

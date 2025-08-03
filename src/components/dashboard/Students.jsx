@@ -1,11 +1,19 @@
 import { Download, Upload } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export default function StudentCardTable() {
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [studentIdToDelete, setStudentIdToDelete] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filters, setFilters] = useState({
+        scholarship: "all",
+        schoolCollege: "all",
+        class: "all",
+        city: "all",
+        state: "all"
+    });
 
     const sampleStudents = [
         {
@@ -18,42 +26,116 @@ export default function StudentCardTable() {
             aadharNo: "1234-5678-9012",
             address: "123 Main Street",
             city: "Delhi",
-            district: "New Delhi",
+            state: "New Delhi",
             pinCode: "110001",
             combination: "PCM",
             scholarship: "Merit-based",
         },
         {
             _id: "2",
-            studentName: "Aman Kumar",
-            mobileNo: "9876543210",
-            emailId: "aman@example.com",
-            class: "12th",
-            schoolCollege: "ABC Public School",
-            aadharNo: "1234-5678-9012",
-            address: "123 Main Street",
-            city: "Delhi",
-            district: "New Delhi",
-            pinCode: "110001",
-            combination: "PCM",
-            scholarship: "Merit-based",
+            studentName: "Priya Sharma",
+            mobileNo: "9123456789",
+            emailId: "priya@example.com",
+            class: "11th",
+            schoolCollege: "XYZ International School",
+            aadharNo: "2345-6789-0123",
+            address: "456 Park Avenue",
+            city: "Mumbai",
+            state: "Maharashtra",
+            pinCode: "400001",
+            combination: "PCB",
+            scholarship: "Need-based",
         },
         {
             _id: "3",
-            studentName: "Aman Kumar",
-            mobileNo: "9876543210",
-            emailId: "aman@example.com",
+            studentName: "Rahul Singh",
+            mobileNo: "9234567890",
+            emailId: "rahul@example.com",
             class: "12th",
+            schoolCollege: "Delhi Public School",
+            aadharNo: "3456-7890-1234",
+            address: "789 Green Street",
+            city: "Bangalore",
+            state: "Karnataka",
+            pinCode: "560001",
+            combination: "Commerce",
+            scholarship: "Sports",
+        },
+        {
+            _id: "4",
+            studentName: "Anita Patel",
+            mobileNo: "9345678901",
+            emailId: "anita@example.com",
+            class: "10th",
             schoolCollege: "ABC Public School",
-            aadharNo: "1234-5678-9012",
-            address: "123 Main Street",
-            city: "Delhi",
-            district: "New Delhi",
-            pinCode: "110001",
-            combination: "PCM",
+            aadharNo: "4567-8901-2345",
+            address: "321 Blue Lane",
+            city: "Pune",
+            state: "Maharashtra",
+            pinCode: "411001",
+            combination: "Arts",
             scholarship: "Merit-based",
         },
+        {
+            _id: "5",
+            studentName: "Vikash Yadav",
+            mobileNo: "9456789012",
+            emailId: "vikash@example.com",
+            class: "11th",
+            schoolCollege: "Modern College",
+            aadharNo: "5678-9012-3456",
+            address: "654 Red Road",
+            city: "Chennai",
+            state: "Tamil Nadu",
+            pinCode: "600001",
+            combination: "PCM",
+            scholarship: "None",
+        },
+        {
+            _id: "6",
+            studentName: "Sneha Gupta",
+            mobileNo: "9567890123",
+            emailId: "sneha@example.com",
+            class: "12th",
+            schoolCollege: "St. Mary's School",
+            aadharNo: "6789-0123-4567",
+            address: "987 Yellow Street",
+            city: "Kolkata",
+            state: "West Bengal",
+            pinCode: "700001",
+            combination: "PCB",
+            scholarship: "Merit-based",
+        }
     ];
+
+    // Get unique values for filter options
+    const filterOptions = useMemo(() => {
+        const scholarships = [...new Set(sampleStudents.map(s => s.scholarship))];
+        const schools = [...new Set(sampleStudents.map(s => s.schoolCollege))];
+        const classes = [...new Set(sampleStudents.map(s => s.class))];
+        const cities = [...new Set(sampleStudents.map(s => s.city))];
+        const states = [...new Set(sampleStudents.map(s => s.state))];
+
+        return { scholarships, schools, classes, cities, states };
+    }, []);
+
+    // Filter students based on search and filters
+    const filteredStudents = useMemo(() => {
+        return sampleStudents.filter(student => {
+            const matchesSearch = searchTerm === "" ||
+                student.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                student.mobileNo.includes(searchTerm) ||
+                student.emailId.toLowerCase().includes(searchTerm.toLowerCase());
+
+            const matchesScholarship = filters.scholarship === "all" || student.scholarship === filters.scholarship;
+            const matchesSchool = filters.schoolCollege === "all" || student.schoolCollege === filters.schoolCollege;
+            const matchesClass = filters.class === "all" || student.class === filters.class;
+            const matchesCity = filters.city === "all" || student.city === filters.city;
+            const matchesState = filters.state === "all" || student.state === filters.state;
+
+            return matchesSearch && matchesScholarship && matchesSchool && matchesClass && matchesCity && matchesState;
+        });
+    }, [searchTerm, filters]);
 
     const handleRowClick = (student) => {
         setSelectedStudent(student);
@@ -61,7 +143,7 @@ export default function StudentCardTable() {
     };
 
     const handleDeleteClick = (id, e) => {
-        e.stopPropagation(); // prevent triggering row click
+        e.stopPropagation();
         setStudentIdToDelete(id);
         setShowDeleteModal(true);
     };
@@ -71,78 +153,187 @@ export default function StudentCardTable() {
         setShowDeleteModal(false);
     };
 
+    const handleFilterChange = (filterType, value) => {
+        setFilters(prev => ({
+            ...prev,
+            [filterType]: value
+        }));
+    };
+
+    const clearAllFilters = () => {
+        setFilters({
+            scholarship: "all",
+            schoolCollege: "all",
+            class: "all",
+            city: "all",
+            state: "all"
+        });
+        setSearchTerm("");
+    };
+
     return (
-        <div className="p-4 w-full overflow-x-auto">
+        <div className="p-4 w-full">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Student List </h2>
+                <h2 className="text-xl font-semibold">Student List ({filteredStudents.length})</h2>
                 <div className="flex gap-2">
-                    <button
-
-                        className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-                    >
+                    <button className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
                         <Download className="w-4 h-4" />
-                        Export
-                    </button>
-                    <button
-
-                        className="flex items-center gap-2 bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-                    >
-                        <Upload className="w-4 h-4" />
-                        Import
+                        Download
                     </button>
                     <button className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
                         Add Student
                     </button>
                 </div>
             </div>
-            <div className="flex justify-between items-center mb-4">
-                <div className="flex gap-2">
-                   <input type="text" placeholder="Search" className="border border-gray-300 w-[300px] rounded-md py-2 px-4" />
+
+            {/* Search and Filters */}
+            <div className="mb-4 space-y-4">
+                <div className="flex justify-between items-center">
+                    <input
+                        type="text"
+                        placeholder="Search by name, mobile, or email..."
+                        className="border border-gray-300 w-[300px] rounded-md py-2 px-4"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button
+                        onClick={clearAllFilters}
+                        className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
+                    >
+                        Clear Filters
+                    </button>
                 </div>
-                <div className="flex gap-2">
-                    <select className="border border-gray-300 rounded-md py-2 w-[200px] px-2">
-                        <option value="all">All</option>   
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
+
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
+                    {/* Scholarship Filter */}
+                    <select
+                        className="border border-gray-300 rounded-md py-2 px-2"
+                        value={filters.scholarship}
+                        onChange={(e) => handleFilterChange('scholarship', e.target.value)}
+                    >
+                        <option value="all">All Scholarships</option>
+                        {filterOptions.scholarships.map(scholarship => (
+                            <option key={scholarship} value={scholarship}>{scholarship}</option>
+                        ))}
+                    </select>
+
+                    {/* School/College Filter */}
+                    <select
+                        className="border border-gray-300 rounded-md py-2 px-2"
+                        value={filters.schoolCollege}
+                        onChange={(e) => handleFilterChange('schoolCollege', e.target.value)}
+                    >
+                        <option value="all">All Schools</option>
+                        {filterOptions.schools.map(school => (
+                            <option key={school} value={school}>{school}</option>
+                        ))}
+                    </select>
+
+                    {/* Class Filter */}
+                    <select
+                        className="border border-gray-300 rounded-md py-2 px-2"
+                        value={filters.class}
+                        onChange={(e) => handleFilterChange('class', e.target.value)}
+                    >
+                        <option value="all">All Classes</option>
+                        {filterOptions.classes.map(cls => (
+                            <option key={cls} value={cls}>{cls}</option>
+                        ))}
+                    </select>
+
+                    {/* City Filter */}
+                    <select
+                        className="border border-gray-300 rounded-md py-2 px-2"
+                        value={filters.city}
+                        onChange={(e) => handleFilterChange('city', e.target.value)}
+                    >
+                        <option value="all">All Cities</option>
+                        {filterOptions.cities.map(city => (
+                            <option key={city} value={city}>{city}</option>
+                        ))}
+                    </select>
+
+                    {/* State Filter */}
+                    <select
+                        className="border border-gray-300 rounded-md py-2 px-2"
+                        value={filters.state}
+                        onChange={(e) => handleFilterChange('state', e.target.value)}
+                    >
+                        <option value="all">All States</option>
+                        {filterOptions.states.map(state => (
+                            <option key={state} value={state}>{state}</option>
+                        ))}
                     </select>
                 </div>
             </div>
 
-            <table className="min-w-full table-auto text-left border-collapse">
-                <thead className="bg-orange-200">
-                    <tr>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Name</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Mobile</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">Class</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">School/College</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600">City</th>
-                        <th className="px-4 py-2 text-sm font-medium text-gray-600 text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody className="divide-y">
-                    {sampleStudents.map((student) => (
-                        <tr
-                            key={student._id}
-                            onClick={() => handleRowClick(student)}
-                            className="bg-white cursor-pointer hover:bg-gray-100"
-                        >
-                            <td className="px-4 py-2 text-sm">{student.studentName}</td>
-                            <td className="px-4 py-2 text-sm">{student.mobileNo}</td>
-                            <td className="px-4 py-2 text-sm">{student.class}</td>
-                            <td className="px-4 py-2 text-sm">{student.schoolCollege}</td>
-                            <td className="px-4 py-2 text-sm">{student.city}</td>
-                            <td className="px-4 py-2 text-sm text-red-500 text-center">
-                                <button
-                                    onClick={(e) => handleDeleteClick(student._id, e)}
-                                    className="hover:underline"
-                                >
-                                    Delete
-                                </button>
-                            </td>
+            {/* Table with horizontal scroll */}
+            <div className="overflow-x-auto border border-gray-200 rounded-lg">
+                <table className="min-w-full table-auto text-left border-collapse">
+                    <thead className="bg-orange-200">
+                        <tr>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Name</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Mobile</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Email</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Class</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">School/College</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Aadhar No</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Address</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">City</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">State</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Pin Code</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Combination</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 whitespace-nowrap">Scholarship</th>
+                            <th className="px-4 py-3 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Action</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                        {filteredStudents.map((student) => (
+                            <tr
+                                key={student._id}
+                                onClick={() => handleRowClick(student)}
+                                className="bg-white cursor-pointer hover:bg-gray-50 transition-colors"
+                            >
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.studentName}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.mobileNo}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.emailId}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.class}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.schoolCollege}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.aadharNo}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.address}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.city}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.state}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.pinCode}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">{student.combination}</td>
+                                <td className="px-4 py-3 text-sm whitespace-nowrap">
+                                    <span className={`px-2 py-1 rounded-full text-xs ${student.scholarship === 'Merit-based' ? 'bg-green-100 text-green-800' :
+                                        student.scholarship === 'Need-based' ? 'bg-blue-100 text-blue-800' :
+                                            student.scholarship === 'Sports' ? 'bg-purple-100 text-purple-800' :
+                                                'bg-gray-100 text-gray-800'
+                                        }`}>
+                                        {student.scholarship}
+                                    </span>
+                                </td>
+                                <td className="px-4 py-3 text-sm text-center whitespace-nowrap">
+                                    <button
+                                        onClick={(e) => handleDeleteClick(student._id, e)}
+                                        className="text-red-500 hover:text-red-700 hover:underline font-medium"
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        {filteredStudents.length === 0 && (
+                            <tr>
+                                <td colSpan="13" className="px-4 py-8 text-center text-gray-500">
+                                    No students found matching your criteria.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
 
             {/* Student Details Modal */}
             {showDetailsModal && selectedStudent && (
@@ -158,7 +349,7 @@ export default function StudentCardTable() {
                             <p><strong>Aadhar:</strong> {selectedStudent.aadharNo}</p>
                             <p><strong>Address:</strong> {selectedStudent.address}</p>
                             <p><strong>City:</strong> {selectedStudent.city}</p>
-                            <p><strong>District:</strong> {selectedStudent.district}</p>
+                            <p><strong>State:</strong> {selectedStudent.state}</p>
                             <p><strong>Pin Code:</strong> {selectedStudent.pinCode}</p>
                             <p><strong>Combination:</strong> {selectedStudent.combination}</p>
                             <p><strong>Scholarship:</strong> {selectedStudent.scholarship}</p>
