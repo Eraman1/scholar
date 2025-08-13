@@ -99,14 +99,23 @@ export default function EnquiryTable() {
         setShowDeleteModal(true);
     };
 
+    const handleEnquiryDownload = () => {
+    window.open(
+      `http://localhost:8000/api/enquiry/download/data`,
+      "_blank"
+    );
+  };
+
     return (
         <div className="p-4 w-full">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Enquiries ({filteredEnquiries.length})</h2>
                 <div className="flex gap-2">
-                    <button className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                    <button 
+                    onClick={handleEnquiryDownload}
+                    className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
                         <Download className="w-4 h-4" />
-                        Export
+                        Download
                     </button>
                 </div>
             </div>

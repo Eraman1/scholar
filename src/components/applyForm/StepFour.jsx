@@ -45,7 +45,7 @@ const StepFour = ({ formData }) => {
                         <p className="font-semibold">{formData.city}</p>
                     </div>
                     <div>
-                        <p className="text-sm text-gray-600">District</p>
+                        <p className="text-sm text-gray-600">State</p>
                         <p className="font-semibold">{formData.district}</p>
                     </div>
                     <div>
