@@ -62,28 +62,28 @@ const StepThree = ({ formData, errors, handleInputChange }) => {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Class *
+                                Student Class *
                             </label>
                             <select
-                                value={formData.class}
-                                onChange={(e) => handleInputChange('class', e.target.value)}
+                                value={formData.studentClass}
+                                onChange={(e) => handleInputChange('studentClass', e.target.value)}
                                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.class ? 'border-red-500' : 'border-gray-300'
                                     }`}
                             >
-                                <option value="">Select Class</option>
+                                <option value="">Select Student Class</option>
                                 {classOptions[formData.scholarship]?.map((cls) => (
                                     <option key={cls} value={cls}>{cls}</option>
                                 ))}
                             </select>
-                            {errors.class && (
+                            {errors.studentClass && (
                                 <p className="mt-1 text-sm text-red-600 flex items-center">
                                     <AlertCircle className="h-4 w-4 mr-1" />
-                                    {errors.class}
+                                    {errors.studentClass}
                                 </p>
                             )}
                         </div>
 
-                        {formData.scholarship === 'vstar' && formData.class && (
+                        {formData.scholarship === 'vstar' && formData.studentClass && (
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Subject Combination *

@@ -36,6 +36,12 @@ export const validateStep = (step, formData) => {
     } else if (!/^\d{6}$/.test(formData.pinCode)) {
       errors.pinCode = "Please enter a valid 6-digit PIN code";
     }
+    if (!formData.isPhoneVerified) {
+      errors.mobileNo = "Please verify your mobile number with OTP";
+    }
+    if (!formData.isEmailVerified) {
+      errors.emailId = "Please verify your email with OTP";
+    }
   }
 
   if (step === 2) {
@@ -55,8 +61,8 @@ export const validateStep = (step, formData) => {
       errors.scholarship = "Please select a scholarship program";
     }
 
-    if (!formData.class) {
-      errors.class = "Please select your class";
+    if (!formData.studentClass) {
+      errors.studentClass = "Please select your class";
     }
 
     if (formData.scholarship === "vstar" && !formData.combination) {

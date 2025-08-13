@@ -59,8 +59,8 @@ export default function ScholarshipSidebar() {
         <div className="w-full h-screen mt-6 md:w-50 lg:w-60 bg-white border-r border-gray-200 overflow-y-auto">
             <div className="flex flex-col gap-2 p-2">
 
-                <a href="#" className="block">
-                    <div className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer">
+                <a href="/dashboard?tab=dash" className="block">
+                    <div className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer ${isActiveTab("dash") ? "bg-green-200" : ""}`}>
                         <SidebarIcon icon={PieChart} />
                         <span className="ml-3 text-sm font-medium">Dashboard</span>
                     </div>

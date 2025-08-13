@@ -29,8 +29,8 @@ const StepFour = ({ formData }) => {
                         <p className="font-semibold">{formData.emailId}</p>
                     </div>
                     <div>
-                        <p className="text-sm text-gray-600">Class</p>
-                        <p className="font-semibold">{formData.class}</p>
+                        <p className="text-sm text-gray-600">Student Class</p>
+                        <p className="font-semibold">{formData.studentClass}</p>
                     </div>
                     <div>
                         <p className="text-sm text-gray-600">School/College</p>

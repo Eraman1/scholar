@@ -23,11 +23,11 @@ export default function ScholarshipApplicationForm() {
 
     // Clear class and combination when scholarship changes
     if (field === "scholarship") {
-      setFormData((prev) => ({ ...prev, class: "", combination: "" }));
+      setFormData((prev) => ({ ...prev, studentClass: "", combination: "" }));
     }
 
     // Clear combination when class changes
-    if (field === "class") {
+    if (field === "studentClass") {
       setFormData((prev) => ({ ...prev, combination: "" }));
     }
   };

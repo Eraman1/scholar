@@ -31,7 +31,7 @@ const NavigationButtons = ({
       <button
         onClick={onPrevious}
         disabled={currentStep === 1}
-        className={`flex items-center px-6 py-3 rounded-lg font-medium transition ${
+        className={`flex items-center cursor-pointer px-6 py-3 rounded-lg font-medium transition ${
           currentStep === 1
             ? "bg-gray-100 text-gray-400 cursor-not-allowed"
             : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -44,7 +44,7 @@ const NavigationButtons = ({
       {currentStep < 4 ? (
         <button
           onClick={onNext}
-          className="flex items-center px-6 py-3 bg-[#FF6B00] text-white rounded-lg font-medium hover:bg-orange-600 transition"
+          className="flex items-center cursor-pointer px-6 py-3 bg-[#FF6B00] text-white rounded-lg font-medium hover:bg-orange-600 transition"
         >
           Next
           <ChevronRight className="h-5 w-5 ml-2" />

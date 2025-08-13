@@ -4,6 +4,7 @@ import ScholarshipSidebar from '../components/dashboard/Sidebar';
 import StudentCardTable from '../components/dashboard/Students';
 import EnquiryTable from '../components/dashboard/Enquiry';
 import ImageUploader from '../components/dashboard/ImageUploader';
+import Stats from '../components/dashboard/Stats';
 
 export default function Dashboard() {
     const location = useLocation();
@@ -28,6 +29,7 @@ export default function Dashboard() {
 
             {/* Main content - takes remaining space */}
             <div className="flex-1 p-4 overflow-auto">
+                {tab === 'dash' && <Stats/>}
                 {tab === 'banner' && <ImageUploader />}
                 {tab === 'students' && <StudentCardTable />}
                 {tab === 'enquiries' && <EnquiryTable />}

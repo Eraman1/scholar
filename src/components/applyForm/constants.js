@@ -43,7 +43,7 @@ export const initialFormData = {
   studentName: "",
   mobileNo: "",
   emailId: "",
-  class: "",
+  studentClass: "",
   schoolCollege: "",
   aadharNo: "",
   address: "",
@@ -52,6 +52,8 @@ export const initialFormData = {
   pinCode: "",
   combination: "",
   scholarship: "",
+  isPhoneVerified: false,
+  isEmailVerified: false,
 };
 
 export const steps = [
