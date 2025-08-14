@@ -72,7 +72,7 @@ export const Contact = () => {
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <MapPinCheck className="h-6 w-6 text-blue-500" />
-                                    <span>123 Education Ave, Delhi, India</span>
+                                    <span>H.O-VRSDC|#01 3rd floor|Dhanyan Manor|Udhayaravi road|Kuvempunagar|Mysuru-570023</span>
                                 </div>
                             </div>
                         </div>

@@ -21,7 +21,7 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
       return;
     }
     try {
-      const response = await sendPhoneOtp({ phone: formData.mobileNo });
+      const response = await sendPhoneOtp({ mobileNo: formData.mobileNo });
       console.log("OTP sent successfully:", response);
       toast.success("OTP sent successfully!");
       setPhoneShowOtpField(true);
@@ -37,7 +37,7 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
       return;
     }
     try {
-      const response = await sendEmailOtp({ email: formData.emailId });
+      const response = await sendEmailOtp({ emailId: formData.emailId });
       console.log("OTP sent successfully:", response);
       toast.success("OTP sent successfully!");
       setPhoneEmailOtpField(true);
@@ -55,7 +55,7 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
     try {
       const response = await verifyPhoneOtp({
         otp: formData.phoneOtp,
-        phone: formData.mobileNo,
+        mobileNo: formData.mobileNo,
       });
       console.log("Verified Phone:", response);
       toast.success("Verified Phone!");
@@ -74,7 +74,7 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
     try {
       const response = await verifyEmailOtp({
         otp: formData.emailOtp,
-        email: formData.emailId,
+        emailId: formData.emailId,
       });
       console.log("Verified Email:", response);
       toast.success("Verified Email!");

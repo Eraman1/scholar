@@ -52,7 +52,7 @@ export const initialFormData = {
   pinCode: "",
   combination: "",
   scholarship: "",
-  isPhoneVerified: false,
+  isPhoneVerified: true,
   isEmailVerified: false,
 };
 
