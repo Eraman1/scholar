@@ -53,3 +53,7 @@ export const addStudentData = (data)=>{
     { responseType: "blob" } 
   );
 }
+
+export const getAllStudentData = ()=>{
+  return axiosInstance.get('/vedubuildApply/get-allstudents-data');
+}

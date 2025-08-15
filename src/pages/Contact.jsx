@@ -64,11 +64,11 @@ export const Contact = () => {
                             <div className="space-y-4 text-gray-700">
                                 <div className="flex items-center space-x-3">
                                     <MailCheck className="h-6 w-6 text-blue-500" />
-                                    <span>info@edugrant.org</span>
+                                    <span>info@vedubuild.org</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <PhoneIncoming className="h-6 w-6 text-blue-500" />
-                                    <span>+91 98765 43210</span>
+                                    <span>+91 88842 62115</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <MapPinCheck className="h-6 w-6 text-blue-500" />

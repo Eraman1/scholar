@@ -1,7 +1,12 @@
 import { Download, Upload } from "lucide-react";
-import { useState, useMemo } from "react";
-import { downloadStudentData,applyBulk } from "../../api/studentApi";
+import { useState, useMemo, useEffect } from "react";
+import {
+  downloadStudentData,
+  applyBulk,
+  getAllStudentData,
+} from "../../api/studentApi";
 import { saveAs } from "file-saver";
+import toast from "react-hot-toast";
 
 export default function StudentCardTable() {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -19,6 +24,7 @@ export default function StudentCardTable() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
+  const [students, setStudents] = useState([]);
 
   const sampleStudents = [
     {
@@ -197,6 +203,19 @@ export default function StudentCardTable() {
       "_blank"
     );
   };
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const res = await getAllStudentData();
+        setStudents(res.data.students);
+      } catch (error) {
+        console.error(err);
+        toast.error("Failed to fetch enquiries");
+      }
+    };
+    fetchStudents();
+  }, []);
 
   return (
     <div className="p-4 w-full">

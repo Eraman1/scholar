@@ -104,7 +104,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-gray-100">
               <li>
                 <a
-                  href="/files/vedubuild policies.docx"
+                  href="/files/PRIVACY POLICY.docx"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-amber-600 transition"
@@ -112,9 +112,24 @@ export const Footer = () => {
                   Privacy Policy
                 </a>
               </li>
+               <li>
+                <a
+                  href="/files/REFUND POLICY.docx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-600 transition"
+                >
+                  Refund Policy
+                </a>
+              </li>
               <li>
-                <a href="#" className="hover:text-amber-600 transition">
-                  Terms of Service
+                <a
+                  href="/files/TERM AND CONDITIONS.docx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-600 transition"
+                >
+                  Term and Conditions
                 </a>
               </li>
               <li>
