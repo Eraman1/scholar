@@ -38,5 +38,9 @@ export default function ImageUploader() {
                 </div>
             )}
         </div>
-    )
-}
+
+        
+        
+        
+    );
+};

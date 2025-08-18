@@ -82,7 +82,11 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
       setPhoneEmailOtpField(false);
     } catch (error) {
       console.error("Error :", error);
-      toast.error("Failed to verify OTP. Please try again.");
+      if (error.response && error.response.status === 409) {
+        toast.error(error.response.data.message); // "Email already registered"
+      } else {
+        toast.error("Failed to verify OTP. Please try again.");
+      }
     }
   };
   return (
@@ -106,8 +110,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
               type="text"
               value={formData.studentName}
               onChange={(e) => handleInputChange("studentName", e.target.value)}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.studentName ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${
+                errors.studentName ? "border-red-500" : "border-gray-300"
+              }`}
               placeholder="Enter your full name"
             />
           </div>
@@ -131,8 +136,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
                 type="tel"
                 value={formData.mobileNo}
                 onChange={(e) => handleInputChange("mobileNo", e.target.value)}
-                className={`flex-1 pl-10 pr-20 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.mobileNo ? "border-red-500" : "border-gray-300"
-                  }`}
+                className={`flex-1 pl-10 pr-20 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${
+                  errors.mobileNo ? "border-red-500" : "border-gray-300"
+                }`}
                 placeholder="Enter 10-digit mobile number"
                 maxLength="10"
               />
@@ -155,7 +161,7 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
                   <input
                     type="text"
                     value={formData.phoneOtp}
-                    nChange={(e) =>
+                    onChange={(e) =>
                       handleInputChange("phoneOtp", e.target.value)
                     }
                     className="w-full px-3 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent"
@@ -197,8 +203,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
               type="email"
               value={formData.emailId}
               onChange={(e) => handleInputChange("emailId", e.target.value)}
-              className={`flex-1 pl-10 pr-28 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.emailId ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`flex-1 pl-10 pr-28 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${
+                errors.emailId ? "border-red-500" : "border-gray-300"
+              }`}
               placeholder="Enter your email address"
             />
 
@@ -222,7 +229,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
                 <input
                   type="text"
                   value={formData.emailOtp}
-                  onChange={(e) => handleInputChange("emailOtp", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("emailOtp", e.target.value)
+                  }
                   className="w-full px-3 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent"
                   placeholder="Enter OTP"
                   maxLength="6"
@@ -257,8 +266,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
             <textarea
               value={formData.address}
               onChange={(e) => handleInputChange("address", e.target.value)}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.address ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${
+                errors.address ? "border-red-500" : "border-gray-300"
+              }`}
               rows="3"
               placeholder="Enter your complete address"
             />
@@ -281,8 +291,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
               type="text"
               value={formData.city}
               onChange={(e) => handleInputChange("city", e.target.value)}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.city ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${
+                errors.city ? "border-red-500" : "border-gray-300"
+              }`}
               placeholder="Enter your city"
             />
           </div>
@@ -304,8 +315,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
               type="text"
               value={formData.district}
               onChange={(e) => handleInputChange("district", e.target.value)}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.district ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${
+                errors.district ? "border-red-500" : "border-gray-300"
+              }`}
               placeholder="Enter your district"
             />
           </div>
@@ -327,8 +339,9 @@ const StepOne = ({ formData, errors, handleInputChange }) => {
               type="text"
               value={formData.pinCode}
               onChange={(e) => handleInputChange("pinCode", e.target.value)}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${errors.pinCode ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent ${
+                errors.pinCode ? "border-red-500" : "border-gray-300"
+              }`}
               placeholder="Enter 6-digit PIN code"
               maxLength="6"
             />

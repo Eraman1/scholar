@@ -6,8 +6,6 @@ import {
   getAllStudentData,
 } from "../../api/studentApi";
 
-import { useState, useMemo } from "react";
-import { downloadStudentData, applyBulk } from "../../api/studentApi";
 import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
 
@@ -477,14 +475,15 @@ export default function StudentCardTable() {
                 </td>
                 <td className="px-4 py-3 text-sm whitespace-nowrap">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs ${student.scholarship === "Merit-based"
-                      ? "bg-green-100 text-green-800"
-                      : student.scholarship === "Need-based"
+                    className={`px-2 py-1 rounded-full text-xs ${
+                      student.scholarship === "Merit-based"
+                        ? "bg-green-100 text-green-800"
+                        : student.scholarship === "Need-based"
                         ? "bg-blue-100 text-blue-800"
                         : student.scholarship === "Sports"
-                          ? "bg-purple-100 text-purple-800"
-                          : "bg-gray-100 text-gray-800"
-                      }`}
+                        ? "bg-purple-100 text-purple-800"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
                   >
                     {student.scholarship}
                   </span>

@@ -7,6 +7,7 @@ import {
   X,
 } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -103,34 +104,28 @@ export const Footer = () => {
             <h4 className="text-lg font-semibold mb-4 text-white">Legal</h4>
             <ul className="space-y-2 text-gray-100">
               <li>
-                <a
-                  href="/files/PRIVACY POLICY.docx"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/privacy-policy"
                   className="hover:text-amber-600 transition"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
-               <li>
-                <a
-                  href="/files/REFUND POLICY.docx"
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <li>
+                <Link
+                  to="/refund-policy"
                   className="hover:text-amber-600 transition"
                 >
                   Refund Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/files/TERM AND CONDITIONS.docx"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/terms-and-conditions"
                   className="hover:text-amber-600 transition"
                 >
                   Term and Conditions
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-amber-600 transition">

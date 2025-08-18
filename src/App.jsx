@@ -13,6 +13,9 @@ import Dashboard from './pages/Dashboard'
 import ScrollToTop from './components/ScrollToTop'
 import LoginPage from './pages/LoginPage'
 import PrivateRoute from './components/PrivateRoute'
+import Privacy_Policy from './pages/Privacy_Policy'
+import RefundPolicy from './pages/RefundPolicy'
+import TermAndCondition from './pages/TermAndCondition'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
@@ -32,6 +35,9 @@ function App() {
           <Route path='/apply' element={<ScholarshipApplicationForm />} />
           <Route path='/partners' element={<div className='flex justify-center items-center h-screen'><h1 className="text-8xl font-bold text-[#3B3B3B] mt-2">Coming Soon</h1></div>} />
           <Route path='/events' element={<div className='flex justify-center items-center h-screen'><h1 className="text-8xl font-bold text-[#3B3B3B] mt-2">Coming Soon</h1></div>} />
+          <Route path="/privacy-policy" element={<Privacy_Policy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermAndCondition />} />
           {/* private route */}
           <Route path="/dashboard" element={
             <PrivateRoute>
