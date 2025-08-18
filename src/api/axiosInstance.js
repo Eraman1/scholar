@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
 
-  baseURL:"http://localhost:8000/api",  //"https://api.vedubuild.org/api",
+  baseURL:"https://api.vedubuild.org/api",
 
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
