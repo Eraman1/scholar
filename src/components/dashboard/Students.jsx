@@ -6,10 +6,8 @@ import {
   getAllStudentData,
 } from "../../api/studentApi";
 
-<<<<<<< HEAD
-=======
 // import { downloadStudentData, applyBulk } from "../../api/studentApi";
->>>>>>> cc77292808832bf82902ca1ab92fb168ff598904
+
 import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
 

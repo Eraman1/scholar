@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-<<<<<<< HEAD
+
   baseURL:"http://localhost:8000/api",  //"https://api.vedubuild.org/api",
-=======
+
   baseURL: import.meta.env.VITE_API_BASE_URL,
->>>>>>> cc77292808832bf82902ca1ab92fb168ff598904
   withCredentials: true,
 });
 
