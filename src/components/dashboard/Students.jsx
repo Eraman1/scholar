@@ -6,6 +6,10 @@ import {
   getAllStudentData,
 } from "../../api/studentApi";
 
+<<<<<<< HEAD
+=======
+// import { downloadStudentData, applyBulk } from "../../api/studentApi";
+>>>>>>> cc77292808832bf82902ca1ab92fb168ff598904
 import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
 
@@ -205,18 +209,18 @@ export default function StudentCardTable() {
     );
   };
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const res = await getAllStudentData();
-        setStudents(res.data.students);
-      } catch (error) {
-        console.error(err);
-        toast.error("Failed to fetch enquiries");
-      }
-    };
-    fetchStudents();
-  }, []);
+  // useEffect(() => {
+  //   const fetchStudents = async () => {
+  //     try {
+  //       const res = await getAllStudentData();
+  //       setStudents(res.data.students);
+  //     } catch (error) {
+  //       console.error(err);
+  //       toast.error("Failed to fetch enquiries");
+  //     }
+  //   };
+  //   fetchStudents();
+  // }, []);
 
   return (
     <div className="p-4 w-full">
