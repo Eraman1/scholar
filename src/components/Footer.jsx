@@ -8,8 +8,11 @@ import {
 } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-lime-700 text-white pt-16 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,10 +23,7 @@ export const Footer = () => {
               <LucideGraduationCap className="h-8 w-8 text-[#FF6B00]" />
               <span className="text-2xl font-bold text-white">Vedubuild</span>
             </div>
-            <p className="text-gray-100 mb-4">
-              Empowering India’s youth through skill development, computer
-              training, and innovation support programs.
-            </p>
+            <p className="text-gray-100 mb-4">{t("footer.description")}</p>
             <div className="flex space-x-4 mt-4">
               <a href="#" className="hover:text-[#FF6B00] transition-colors">
                 <Facebook size={20} />
@@ -43,30 +43,30 @@ export const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">
-              Quick Links
+              {t("footer.quickLinks.title")}
             </h4>
             <ul className="space-y-2 text-gray-100">
               <li>
-                <a href="#home" className="hover:text-amber-600 transition">
-                  Home
+                <a href="/" className="hover:text-amber-600 transition">
+                  {t("footer.quickLinks.home")}
                 </a>
               </li>
               <li>
-                <a href="#about" className="hover:text-amber-600 transition">
-                  About
+                <a href="/about" className="hover:text-amber-600 transition">
+                  {t("footer.quickLinks.about")}
                 </a>
               </li>
               <li>
                 <a
-                  href="#scholarships"
+                  href="/scholarships"
                   className="hover:text-amber-600 transition"
                 >
-                  Scholarships
+                  {t("footer.quickLinks.scholarships")}
                 </a>
               </li>
               <li>
-                <a href="#events" className="hover:text-amber-600 transition">
-                  Events
+                <a href="/events" className="hover:text-amber-600 transition">
+                  {t("footer.quickLinks.events")}
                 </a>
               </li>
             </ul>
@@ -74,41 +74,48 @@ export const Footer = () => {
 
           {/* Support */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Support</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white">
+              {t("footer.support.title")}
+            </h4>
             <ul className="space-y-2 text-gray-100">
+              {/*
               <li>
                 <a href="#" className="hover:text-amber-600 transition">
-                  FAQ
+                  {t("footer.support.faq")}
                 </a>
-              </li>
+              </li> 8 */}
               <li>
-                <a href="#contact" className="hover:text-amber-600 transition">
-                  Contact Us
+                <a href="/contact" className="hover:text-amber-600 transition">
+                  {t("footer.support.contact")}
                 </a>
               </li>
-              <li>
-                <a href="#" className="hover:text-amber-600 transition">
-                  Application Help
-                </a>
-              </li>
+              {/*
               <li>
                 <a href="#" className="hover:text-amber-600 transition">
-                  Resources
+                  {t("footer.support.help")}
                 </a>
-              </li>
+              </li> */}
+              {/*
+              <li>
+                <a href="#" className="hover:text-amber-600 transition">
+                  {t("footer.support.resources")}
+                </a>
+              </li> */}
             </ul>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Legal</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white">
+              {t("footer.legal.title")}
+            </h4>
             <ul className="space-y-2 text-gray-100">
               <li>
                 <Link
                   to="/privacy-policy"
                   className="hover:text-amber-600 transition"
                 >
-                  Privacy Policy
+                  {t("footer.legal.privacy")}
                 </Link>
               </li>
               <li>
@@ -116,7 +123,7 @@ export const Footer = () => {
                   to="/refund-policy"
                   className="hover:text-amber-600 transition"
                 >
-                  Refund Policy
+                  {t("footer.legal.refund")}
                 </Link>
               </li>
               <li>
@@ -124,14 +131,15 @@ export const Footer = () => {
                   to="/terms-and-conditions"
                   className="hover:text-amber-600 transition"
                 >
-                  Term and Conditions
+                  {t("footer.legal.terms")}
                 </Link>
               </li>
+              {/*
               <li>
                 <a href="#" className="hover:text-amber-600 transition">
-                  Cookie Policy
+                  {t("footer.legal.cookie")}
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -139,7 +147,7 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-200 mt-10 pt-6 text-center text-gray-200 text-sm">
           <p>
-            &copy; 2024 Vedubuild. All rights reserved. Designed by{" "}
+            &copy; 2024 Vedubuild. {t("footer.rights")}{" "}
             <a
               href="https://www.aadishrisoftech.com"
               className="text-white font-semibold hover:text-amber-600 transition"

@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react'
+import { useState } from 'react';
 
-import  { useState } from "react";
-
-const ExamSchedule = () => {
-  const [pdfFile, setPdfFile] = useState(null);
+const AdmitCard = () => {
+const [pdfFile, setPdfFile] = useState(null);
 
   // File change handler
   const handleFileChange = (e) => {
@@ -17,7 +16,7 @@ const ExamSchedule = () => {
   };
   return (
     <div className="w-full max-w-md mx-auto p-4 mt-8 border rounded-md shadow-sm bg-white">
-      <h2 className="text-xl font-semibold mb-4 text-center">Upload Exam Schedule</h2>
+      <h2 className="text-xl font-semibold mb-4 text-center">Upload Admit Card</h2>
 
       {/* PDF Upload */}
       <input
@@ -49,6 +48,6 @@ const ExamSchedule = () => {
       )}
     </div>
   );
-};
+}
 
-export default ExamSchedule;
+export default AdmitCard

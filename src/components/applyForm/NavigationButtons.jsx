@@ -2,6 +2,7 @@
 import React from "react";
 import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import { addStudentData } from "../../api/studentApi";
+import { useNavigate } from "react-router-dom";
 
 const NavigationButtons = ({
   currentStep,
@@ -10,6 +11,7 @@ const NavigationButtons = ({
   onSubmit,
   formData,
 }) => {
+  const navigate = useNavigate();
   const handleAddStudentData = async () => {
     if (!formData) {
       alert("Please enter data");
@@ -24,7 +26,6 @@ const NavigationButtons = ({
       alert("Failed to Appy. Please try again.");
     }
   };
-
 
   return (
     <div className="flex justify-between pt-8">
@@ -51,7 +52,7 @@ const NavigationButtons = ({
         </button>
       ) : (
         <button
-          onClick={async() => {
+          onClick={async () => {
             await handleAddStudentData();
             onSubmit();
           }}

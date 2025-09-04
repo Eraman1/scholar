@@ -8,10 +8,13 @@ import Stats from '../components/dashboard/Stats';
 import Syllabus from '../components/dashboard/Syllabus';
 import ExamSchedule from '../components/dashboard/ExamSchedule';
 import AdmitCard from '../components/dashboard/AdmitCard';
+import StudentScholarshipSidebar from '../components/studentDashboard/StudentSlideBar';
+import ProfileStats from '../components/studentDashboard/stats';
+import StudentSyllabus from '../components/studentDashboard/syllabus';
 
-export default function Dashboard() {
+export default function StudentDashboard() {
     const location = useLocation();
-    const [tab, setTab] = useState('dash');
+    const [tab, setTab] = useState('prof');
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -19,7 +22,7 @@ export default function Dashboard() {
         if (tabFromUrl) {
             setTab(tabFromUrl);
         } else {
-            setTab('dash');
+            setTab('prof');
         }
     }, [location.search]);
 
@@ -27,13 +30,13 @@ export default function Dashboard() {
         <div className="flex min-h-screen mt-5">
             {/* Sidebar - fixed width */}
             <div className="md:w-50 lg:w-60 bg-white border-r shadow-md">
-                <ScholarshipSidebar />
+                <StudentScholarshipSidebar />
             </div>
 
             {/* Main content - takes remaining space */}
             <div className="flex-1 p-4 overflow-auto">
-                {tab === 'dash' && <Stats/>}
-                {tab === 'banner' && <ImageUploader />}
+                {tab === 'prof' && <ProfileStats/>}
+                {tab === 'student-syllabus' && <StudentSyllabus />}
                 {tab === 'students' && <StudentCardTable />}
                 {tab === 'enquiries' && <EnquiryTable />}
                 {tab === 'syllabus' && <Syllabus/>}

@@ -53,7 +53,7 @@ export const initialFormData = {
   combination: "",
   scholarship: "",
   isPhoneVerified: true,
-  isEmailVerified: false,
+  isEmailVerified: true,
 };
 
 export const steps = [

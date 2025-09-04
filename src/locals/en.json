@@ -1,0 +1,158 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "scholarships": "Scholarships",
+    "partners": "Partners",
+    "events": "Events",
+    "contact": "Contact"
+  },
+  "auth": {
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?"
+  },
+  "actions": {
+    "applyNow": "Apply Now",
+    "dashboard": "Dashboard"
+  },
+  "footer": {
+    "description": "Empowering India’s youth through skill development, computer training, and innovation support programs.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "about": "About",
+      "scholarships": "Scholarships",
+      "events": "Events"
+    },
+    "support": {
+      "title": "Support",
+      "faq": "FAQ",
+      "contact": "Contact Us",
+      "help": "Application Help",
+      "resources": "Resources"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "refund": "Refund Policy",
+      "terms": "Terms and Conditions",
+      "cookie": "Cookie Policy"
+    },
+    "rights": "All rights reserved. Designed by"
+  },
+  "stepOne": {
+    "title": "Personal Information",
+    "subtitle": "Please provide your basic details",
+
+    "studentName": {
+      "label": "Student Name *",
+      "placeholder": "Enter your full name",
+      "error": "Student name is required"
+    },
+
+    "mobileNo": {
+      "label": "Mobile Number *",
+      "placeholder": "Enter 10-digit mobile number",
+      "sendOtp": "Send OTP",
+      "otpLabel": "Enter OTP *",
+      "otpPlaceholder": "Enter OTP",
+      "verify": "Verify",
+      "error": "Please enter a valid 10-digit mobile number"
+    },
+
+    "emailId": {
+      "label": "Email ID *",
+      "placeholder": "Enter your email address",
+      "sendOtp": "Send OTP",
+      "otpLabel": "Enter OTP *",
+      "otpPlaceholder": "Enter OTP",
+      "verify": "Verify",
+      "error": "Please enter a valid email address"
+    },
+
+    "address": {
+      "label": "Address *",
+      "placeholder": "Enter your complete address",
+      "error": "Address is required"
+    },
+
+    "city": {
+      "label": "City *",
+      "placeholder": "Enter your city",
+      "error": "City is required"
+    },
+
+    "district": {
+      "label": "State *",
+      "placeholder": "Enter your district",
+      "error": "State/District is required"
+    },
+
+    "pinCode": {
+      "label": "PIN Code *",
+      "placeholder": "Enter 6-digit PIN code",
+      "error": "PIN code is required"
+    }
+  },
+  "stepTwo": {
+    "title": "Academic Details",
+    "subtitle": "Please provide your academic information",
+    "schoolCollegeLabel": "School/College Name *",
+    "schoolCollegePlaceholder": "Enter your school/college name",
+    "aadharLabel": "Aadhar Number *",
+    "aadharPlaceholder": "Enter 12-digit Aadhar number",
+    "error": {
+      "schoolCollege": "School/College name is required",
+      "aadharNo": "Please enter a valid Aadhar number"
+    }
+  },
+  "stepThree": {
+    "title": "Program Selection",
+    "subtitle": "Choose your scholarship program and academic details",
+
+    "scholarshipLabel": "Select Scholarship Program *",
+    "target": "Target",
+    "enrollmentFee": "Enrollment Fee",
+
+    "studentClassLabel": "Student Class *",
+    "studentClassPlaceholder": "Select Student Class",
+
+    "combinationLabel": "Subject Combination *",
+    "combinationPlaceholder": "Select Combination",
+
+    "error": {
+      "scholarship": "Please select a scholarship program",
+      "studentClass": "Please select your class",
+      "combination": "Please select a subject combination"
+    }
+  },
+  "stepFour": {
+    "title": "Review & Submit",
+    "subtitle": "Please review your information before submitting",
+    "studentName": "Student Name",
+    "mobileNo": "Mobile Number",
+    "emailId": "Email ID",
+    "studentClass": "Student Class",
+    "schoolCollege": "School/College",
+    "aadharNo": "Aadhar Number",
+    "city": "City",
+    "state": "State",
+    "pinCode": "PIN Code",
+    "combination": "Subject Combination",
+    "address": "Address",
+    "selectedProgram": "Selected Program",
+    "enrollmentFee": "Enrollment Fee",
+    "importantNote": "Important:",
+    "importantMsg": "Please ensure all information is correct before submitting. You will receive an email confirmation with payment instructions after submission."
+  },
+  "successPage": {
+    "title": "Application Submitted!",
+    "message": "Your scholarship application has been successfully submitted. You will receive a confirmation email shortly.",
+    "applicationId": "Application ID",
+    "button": "Submit Another Application"
+  }
+}
