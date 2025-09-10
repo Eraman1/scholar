@@ -12,6 +12,21 @@ import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
   const { t } = useTranslation();
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,ta,ml,kn,te',
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+      },
+      'google_translate_element'
+    );
+  }
+
+  // Call after 3 seconds
+  setTimeout(function () {
+    googleTranslateElementInit();
+  }, 2000);
 
   return (
     <footer className="bg-lime-700 text-white pt-16 pb-10">
@@ -159,5 +174,6 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
+
   );
 };

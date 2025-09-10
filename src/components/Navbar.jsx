@@ -24,8 +24,8 @@ export default function Navbar() {
     { label: t("navbar.home"), path: "/" },
     { label: t("navbar.about"), path: "/about" },
     { label: t("navbar.scholarships"), path: "/scholarships" },
-   /* { label: t("navbar.partners"), path: "/partners" }, */
-   /* { label: t("navbar.events"), path: "/events" }, */
+    /* { label: t("navbar.partners"), path: "/partners" }, */
+    /* { label: t("navbar.events"), path: "/events" }, */
     { label: t("navbar.contact"), path: "/contact" },
   ];
 
@@ -73,7 +73,7 @@ export default function Navbar() {
               <select
                 onChange={(e) => changeLanguage(e.target.value)}
                 defaultValue="en"
-                className="px-2 py-1 border rounded bg-white text-gray-800 text-sm"
+                className="px-2 py-1 border rounded bg-white text-gray-800 text-sm hidden"
               >
                 <option value="en">ENGLISH</option>
                 <option value="hi">HINDI</option>
@@ -82,30 +82,32 @@ export default function Navbar() {
                 <option value="tam">TAMIL</option>
                 <option value="kan">KANNADA</option>
               </select>
+
+              <div className="text-gray-9000">
+
+                <div id="google_translate_element"></div>
+              </div>
             </div>
 
             {/* Desktop Links */}
             <div
-              className={`hidden md:flex items-center ${
-                ["en", "hi"].includes(i18n.language) ? "space-x-8" : "space-x-4"
-              }`}
+              className={`hidden md:flex items-center ${["en", "hi"].includes(i18n.language) ? "space-x-8" : "space-x-4"
+                }`}
             >
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   className={`
-        ${
-          ["en", "hi"].includes(i18n.language)
-            ? "text-base whitespace-nowrap"
-            : "text-sm whitespace-normal break-words max-w-[120px] text-center"
-        }
+        ${["en", "hi"].includes(i18n.language)
+                      ? "text-base whitespace-nowrap"
+                      : "text-sm whitespace-normal break-words max-w-[120px] text-center"
+                    }
         font-semibold transition-colors
-        ${
-          isActive(item.path)
-            ? "text-[#FF6B00]"
-            : "text-gray-700 hover:text-[#51A545]"
-        }
+        ${isActive(item.path)
+                      ? "text-[#FF6B00]"
+                      : "text-gray-700 hover:text-[#51A545]"
+                    }
       `}
                 >
                   {item.label.toUpperCase()}
@@ -118,11 +120,10 @@ export default function Navbar() {
                   className={`
     bg-gray-100 hover:bg-[#FF6B00] text-gray-800 hover:text-white border border-[#FF6B00] 
     px-4 py-2 rounded-md font-semibold transition-colors
-    ${
-      ["en", "hi"].includes(i18n.language)
-        ? "text-base whitespace-nowrap" // ✅ en/hi me ek line
-        : "text-sm whitespace-normal"
-    }    // ✅ baki language me wrap allow
+    ${["en", "hi"].includes(i18n.language)
+                      ? "text-base whitespace-nowrap" // ✅ en/hi me ek line
+                      : "text-sm whitespace-normal"
+                    }    // ✅ baki language me wrap allow
   `}
                 >
                   {t("actions.applyNow")}
@@ -137,7 +138,7 @@ export default function Navbar() {
                     ["en", "hi"].includes(i18n.language)
                       ? "text-base"
                       : "text-sm"
-                  }`}
+                    }`}
                 >
                   {t("actions.dashboard")}
                 </button>
@@ -152,7 +153,7 @@ export default function Navbar() {
                     ["en", "hi"].includes(i18n.language)
                       ? "text-base"
                       : "text-sm"
-                  }`}
+                    }`}
                 >
                   {t("auth.login")}
                 </button>
@@ -179,11 +180,10 @@ export default function Navbar() {
                 key={item.path}
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
-                className={`block py-2 text-base font-medium ${
-                  isActive(item.path)
-                    ? "text-[#FF6B00]"
-                    : "text-gray-700 hover:text-[#51A545]"
-                }`}
+                className={`block py-2 text-base font-medium ${isActive(item.path)
+                  ? "text-[#FF6B00]"
+                  : "text-gray-700 hover:text-[#51A545]"
+                  }`}
               >
                 {item.label}
               </Link>
