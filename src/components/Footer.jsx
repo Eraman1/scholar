@@ -25,16 +25,29 @@ export const Footer = () => {
             </div>
             <p className="text-gray-100 mb-4">{t("footer.description")}</p>
             <div className="flex space-x-4 mt-4">
-              <a href="#" className="hover:text-[#FF6B00] transition-colors">
+              <a
+                href="https://www.facebook.com/profile.php?id=61580432246083"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#FF6B00] transition-colors"
+              >
                 <Facebook size={20} />
               </a>
-              <a href="#" className="hover:text-[#FF6B00] transition-colors">
+              <a
+                href="https://x.com/Vedubuildindia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#FF6B00] transition-colors"
+              >
                 <X size={20} />
               </a>
               <a href="#" className="hover:text-[#FF6B00] transition-colors">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="hover:text-[#FF6B00] transition-colors">
+              <a
+                href="mailto:info@vedubuild.org?subject=Business%20Inquiry&body=Hello%20Vedubuild%20Team,%0D%0A%0D%0AI%20would%20like%20to%20know%20more%20about%20your%20services.%0D%0A%0D%0AThanks,"
+                className="hover:text-[#FF6B00] transition-colors"
+              >
                 <Mail size={20} />
               </a>
             </div>

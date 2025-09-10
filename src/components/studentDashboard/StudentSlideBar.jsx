@@ -29,11 +29,13 @@ import {
   resetStudentPassword,
 } from "../../api/studentApi";
 import { useAuth } from "../../context/AuthContext";
+import { Eye, EyeOff } from "lucide-react";
 
 const SidebarIcon = ({ icon: Icon }) => <Icon size={20} />;
 
 export default function StudentScholarshipSidebar() {
   const [isExamManagementOpen, setIsExamManagementOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [isResetOpen, setIsResetOpen] = useState(false);
   const [isOtpField, setOtpField] = useState(false);
   const { logout } = useAuth();
@@ -92,7 +94,8 @@ export default function StudentScholarshipSidebar() {
       return;
     }
     // 👇 LocalStorage se emailId nikaal
-    const emailId = localStorage.getItem("studentEmail");
+    const studentEmailId = JSON.parse(localStorage.getItem("student"));
+    const emailId = studentEmailId.emailId
 
     if (!emailId) {
       toast.error("No email found, please login again.");
@@ -109,7 +112,7 @@ export default function StudentScholarshipSidebar() {
       setOtpField(false);
     } catch (error) {
       console.error("Error :", error);
-      toast.error("Failed to Resend Otp. Please try again.");
+      toast.error("Failed to send Otp. Please try again.");
     }
   };
 
@@ -258,8 +261,10 @@ export default function StudentScholarshipSidebar() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
             <h2 className="text-lg font-semibold mb-4">Reset Password</h2>
+
+            {/* OTP Field */}
             <input
-              type="otp"
+              type="text"
               placeholder="Enter your OTP"
               value={formData.otp}
               onChange={(e) =>
@@ -267,18 +272,35 @@ export default function StudentScholarshipSidebar() {
               }
               className="w-full border p-2 rounded mb-4"
             />
-            <input
-              type="password"
-              placeholder="Enter your New password"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              className="w-full border p-2 rounded mb-4"
-            />
+
+            {/* Password Field + Eye Toggle */}
+            <div className="relative mb-4">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your New password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                className="w-full border p-2 rounded"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+
+            {/* Buttons */}
             <div className="flex justify-end gap-2">
               <button
-                onClick={() => setOtpField(false)}
+                onClick={() => {
+                  setOtpField(false);
+                  setFormData({ emailId: "", otp: "", password: "" }); // 👈 Reset form
+                }}
                 className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
               >
                 Cancel

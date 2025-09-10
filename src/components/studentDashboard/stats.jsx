@@ -12,36 +12,28 @@ import {
 } from "lucide-react";
 
 export default function ProfileStats({ student }) {
-  const studentData =
-    student || {
-      application_id: "APP123456",
-      studentName: "Shubham Narayan",
-      mobileNo: "9876543210",
-      emailId: "shubham@example.com",
-      password: "********",
-      address: "123, MG Road",
-      city: "Patna",
-      district: "Patna",
-      pinCode: "800001",
-      schoolCollege: "ABC Public School",
-      aadharNo: "1234-5678-9012",
-      scholarship: "National Scholarship",
-      studentClass: "12th",
-      combination: "PCM",
-    };
+  const studentData = JSON.parse(localStorage.getItem("student"));
 
   const fields = [
-    { label: "Application ID", value: studentData.application_id, icon: IdCard },
+    {
+      label: "Application ID",
+      value: studentData.application_id,
+      icon: IdCard,
+    },
     { label: "Student Name", value: studentData.studentName, icon: User },
     { label: "Mobile No", value: studentData.mobileNo, icon: Phone },
     { label: "Email ID", value: studentData.emailId, icon: Mail },
-    { label: "Password", value: studentData.password, icon: Lock },
+   
     { label: "Address", value: studentData.address, icon: Home },
     { label: "City", value: studentData.city, icon: MapPin },
     { label: "District", value: studentData.district, icon: MapPin },
     { label: "Pin Code", value: studentData.pinCode, icon: MapPin },
-    { label: "School / College", value: studentData.schoolCollege, icon: BookOpen },
-    { label: "Aadhar No", value: studentData.aadharNo, icon: IdCard },
+    {
+      label: "School / College",
+      value: studentData.schoolCollege,
+      icon: BookOpen,
+    },
+   
     { label: "Scholarship", value: studentData.scholarship, icon: Award },
     { label: "Class", value: studentData.studentClass, icon: BookOpen },
     { label: "Combination", value: studentData.combination, icon: BookOpen },
@@ -58,7 +50,9 @@ export default function ProfileStats({ student }) {
             </div>
             <div>
               <h1 className="text-2xl font-bold">{studentData.studentName}</h1>
-              <p className="text-green-100">Application ID: {studentData.application_id}</p>
+              <p className="text-green-100">
+                Application ID: {studentData.application_id}
+              </p>
             </div>
           </div>
           <div className="mt-4 md:mt-0 flex space-x-3">
@@ -85,7 +79,9 @@ export default function ProfileStats({ student }) {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">{field.label}</p>
-                  <p className="text-base font-semibold text-gray-900">{field.value}</p>
+                  <p className="text-base font-semibold text-gray-900">
+                    {field.value}
+                  </p>
                 </div>
               </div>
             );
