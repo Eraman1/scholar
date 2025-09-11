@@ -69,3 +69,7 @@ export const resetStudentPassword = (formData) => {
     responseType: "blob",
   });
 };
+
+export const totalStudents = ()=>{
+  return axiosInstance.get("/vedubuildApply/total-students")
+}

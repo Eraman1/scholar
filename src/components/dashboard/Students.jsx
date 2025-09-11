@@ -1,9 +1,6 @@
 import { Download, Upload } from "lucide-react";
 import { useState, useMemo, useEffect } from "react";
-import {
-  applyBulk,
-  getAllStudentData,
-} from "../../api/studentApi";
+import { applyBulk, getAllStudentData } from "../../api/studentApi";
 
 // import { downloadStudentData, applyBulk } from "../../api/studentApi";
 
@@ -27,6 +24,10 @@ export default function StudentCardTable() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
   const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    getAllStudentData().then((res) => setStudents(res.data.students));
+  }, []);
 
   const sampleStudents = [
     {
@@ -123,18 +124,18 @@ export default function StudentCardTable() {
 
   // Get unique values for filter options
   const filterOptions = useMemo(() => {
-    const scholarships = [...new Set(sampleStudents.map((s) => s.scholarship))];
-    const schools = [...new Set(sampleStudents.map((s) => s.schoolCollege))];
-    const classes = [...new Set(sampleStudents.map((s) => s.class))];
-    const cities = [...new Set(sampleStudents.map((s) => s.city))];
-    const states = [...new Set(sampleStudents.map((s) => s.state))];
+    const scholarships = [...new Set(students.map((s) => s.scholarship))];
+    const schools = [...new Set(students.map((s) => s.schoolCollege))];
+    const classes = [...new Set(students.map((s) => s.class))];
+    const cities = [...new Set(students.map((s) => s.city))];
+    const states = [...new Set(students.map((s) => s.state))];
 
     return { scholarships, schools, classes, cities, states };
   }, []);
 
   // Filter students based on search and filters
   const filteredStudents = useMemo(() => {
-    return sampleStudents.filter((student) => {
+    return students.filter((student) => {
       const matchesSearch =
         searchTerm === "" ||
         student.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||

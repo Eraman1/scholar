@@ -5,6 +5,7 @@ import {
   Linkedin,
   Mail,
   X,
+  Instagram,
 } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -15,11 +16,11 @@ export const Footer = () => {
   function googleTranslateElementInit() {
     new google.translate.TranslateElement(
       {
-        pageLanguage: 'en',
-        includedLanguages: 'en,hi,ta,ml,kn,te',
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+        pageLanguage: "en",
+        includedLanguages: "en,hi,ta,ml,kn,te",
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
       },
-      'google_translate_element'
+      "google_translate_element"
     );
   }
 
@@ -56,8 +57,21 @@ export const Footer = () => {
               >
                 <X size={20} />
               </a>
-              <a href="#" className="hover:text-[#FF6B00] transition-colors">
+              <a
+                href="https://www.linkedin.com/company/108708455/admin/dashboard/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#FF6B00] transition-colors"
+              >
                 <Linkedin size={20} />
+              </a>
+              <a
+                href="https://www.instagram.com/vedubuild_india/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#FF6B00] transition-colors"
+              >
+                <Instagram size={20} />
               </a>
               <a
                 href="mailto:info@vedubuild.org?subject=Business%20Inquiry&body=Hello%20Vedubuild%20Team,%0D%0A%0D%0AI%20would%20like%20to%20know%20more%20about%20your%20services.%0D%0A%0D%0AThanks,"
@@ -187,6 +201,5 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
-
   );
 };

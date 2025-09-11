@@ -1,7 +1,8 @@
 import { Download } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { getAllEnquiry } from "../../api/enquiryApi";
+import { getAllEnquiry,deleteEnquiry } from "../../api/enquiryApi";
+
 
 export default function EnquiryTable() {
   const [enquiries, setEnquiries] = useState([]);
@@ -87,9 +88,23 @@ export default function EnquiryTable() {
     setSearchTerm("");
   };
 
-  const confirmDelete = () => {
-    console.log("Delete enquiry with ID:", enquiryIdToDelete);
+  const confirmDelete = async () => {
+   try {
+    // Delete request backend pe bhejna
+    await deleteEnquiry(enquiryIdToDelete); // ye api function banake import karna hoga
+    toast.success("Enquiry deleted successfully!");
+
+    // Local state se bhi remove kar do
+    setEnquiries((prev) =>
+      prev.filter((enq) => enq._id !== enquiryIdToDelete)
+    );
+
     setShowDeleteModal(false);
+    setEnquiryIdToDelete(null);
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to delete enquiry");
+  }
   };
 
   const handleDeleteClick = (id, e) => {
@@ -220,12 +235,14 @@ export default function EnquiryTable() {
                   </div>
                 </td>
                 <td className="px-4 py-3 text-sm text-center whitespace-nowrap">
-                  {/* <button
-                                        onClick={(e) => handleDeleteClick(message._id, e)}
-                                        className="text-red-500 hover:text-red-700 hover:underline font-medium"
-                                    >
-                                        Delete
-                                    </button> */}
+                  
+                  <button
+                    onClick={(e) => handleDeleteClick(message._id, e)}
+                    className="text-red-500 hover:text-red-700 hover:underline font-medium"
+                  >
+                    Delete
+                  </button>
+    
                 </td>
               </tr>
             ))}

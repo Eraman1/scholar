@@ -5,5 +5,14 @@ export const createEnquiry = (formData) => {
 };
 
 export const getAllEnquiry = () => {
-  return axios.get("/enquiry/get-all"); // assuming this is the route
+  return axios.get("/enquiry/get-all"); 
+};
+
+
+export const totalEnquiries = () => {
+  return axios.get("/enquiry/total-enquiries"); 
+};
+
+export const deleteEnquiry = (id) => {
+  return axios.delete(`/enquiry/${id}`);
 };
