@@ -16,9 +16,9 @@ export default function StudentCardTable() {
   const [filters, setFilters] = useState({
     scholarship: "all",
     schoolCollege: "all",
-    class: "all",
+    studentClass: "all", // ✅ instead of class
     city: "all",
-    state: "all",
+    district: "all", // ✅ instead of state
   });
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -26,9 +26,16 @@ export default function StudentCardTable() {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    getAllStudentData().then((res) => setStudents(res.data.students));
+    getAllStudentData()
+      .then((res) => {
+        console.log("Fetched students:", res.data.students); // ← ye check karne ke liye
+        console.log("Filtered Students:", filteredStudents);
+        setStudents(res.data.students);
+      })
+      .catch((err) => {
+        console.error("Error fetching students:", err);
+      });
   }, []);
-
   const sampleStudents = [
     {
       _id: "1",
@@ -126,34 +133,39 @@ export default function StudentCardTable() {
   const filterOptions = useMemo(() => {
     const scholarships = [...new Set(students.map((s) => s.scholarship))];
     const schools = [...new Set(students.map((s) => s.schoolCollege))];
-    const classes = [...new Set(students.map((s) => s.class))];
+    const classes = [...new Set(students.map((s) => s.studentClass))]; // ✅
     const cities = [...new Set(students.map((s) => s.city))];
-    const states = [...new Set(students.map((s) => s.state))];
+    const states = [...new Set(students.map((s) => s.district))]; // ✅
 
     return { scholarships, schools, classes, cities, states };
-  }, []);
+  }, [students]);
 
   // Filter students based on search and filters
   const filteredStudents = useMemo(() => {
     return students.filter((student) => {
       const matchesSearch =
         searchTerm === "" ||
-        student.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.mobileNo.includes(searchTerm) ||
-        student.emailId.toLowerCase().includes(searchTerm.toLowerCase());
+        student.studentName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        student.mobileNo?.includes(searchTerm) ||
+        student.emailId?.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesScholarship =
         filters.scholarship === "all" ||
         student.scholarship === filters.scholarship;
+
       const matchesSchool =
         filters.schoolCollege === "all" ||
         student.schoolCollege === filters.schoolCollege;
+
       const matchesClass =
-        filters.class === "all" || student.class === filters.class;
+        filters.studentClass === "all" ||
+        student.studentClass === filters.studentClass; // ✅
+
       const matchesCity =
         filters.city === "all" || student.city === filters.city;
+
       const matchesState =
-        filters.state === "all" || student.state === filters.state;
+        filters.district === "all" || student.district === filters.district; // ✅
 
       return (
         matchesSearch &&
@@ -164,7 +176,7 @@ export default function StudentCardTable() {
         matchesState
       );
     });
-  }, [searchTerm, filters]);
+  }, [searchTerm, filters, students]);
 
   const handleRowClick = (student) => {
     setSelectedStudent(student);
@@ -193,9 +205,9 @@ export default function StudentCardTable() {
     setFilters({
       scholarship: "all",
       schoolCollege: "all",
-      class: "all",
+      studentClass: "all",
       city: "all",
-      state: "all",
+      district: "all",
     });
     setSearchTerm("");
   };
@@ -452,7 +464,7 @@ export default function StudentCardTable() {
                   {student.emailId}
                 </td>
                 <td className="px-4 py-3 text-sm whitespace-nowrap">
-                  {student.class}
+                  {student.studentClass}
                 </td>
                 <td className="px-4 py-3 text-sm whitespace-nowrap">
                   {student.schoolCollege}
@@ -467,7 +479,7 @@ export default function StudentCardTable() {
                   {student.city}
                 </td>
                 <td className="px-4 py-3 text-sm whitespace-nowrap">
-                  {student.state}
+                  {student.district}
                 </td>
                 <td className="px-4 py-3 text-sm whitespace-nowrap">
                   {student.pinCode}
@@ -529,7 +541,7 @@ export default function StudentCardTable() {
                 <strong>Email:</strong> {selectedStudent.emailId}
               </p>
               <p>
-                <strong>Class:</strong> {selectedStudent.class}
+                <strong>Class:</strong> {selectedStudent.studentClass}
               </p>
               <p>
                 <strong>School/College:</strong> {selectedStudent.schoolCollege}
@@ -544,7 +556,7 @@ export default function StudentCardTable() {
                 <strong>City:</strong> {selectedStudent.city}
               </p>
               <p>
-                <strong>State:</strong> {selectedStudent.state}
+                <strong>State:</strong> {selectedStudent.district}
               </p>
               <p>
                 <strong>Pin Code:</strong> {selectedStudent.pinCode}
